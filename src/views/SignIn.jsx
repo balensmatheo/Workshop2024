@@ -73,7 +73,7 @@ export default function SignIn(props) {
     };
 
     const handleSubmit = (event) => {
-        navigate('/app/dashboard', { replace: true });
+        navigate('/dashboard', { replace: true });
 
         if (emailError || passwordError) {
         event.preventDefault();
