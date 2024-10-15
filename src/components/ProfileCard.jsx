@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card, CardContent, Typography, Avatar, Grid } from '@mui/material';
 
 const ProfileCard = ({ user }) => {
