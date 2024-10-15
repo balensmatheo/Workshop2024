@@ -5,10 +5,13 @@ import Ladder from '../components/Progression';
 import RewardLadder from '../components/RewardLadder';
 import RewardTimeline from '../components/RewardTimeline';
 import { fetchUserAttributes } from 'aws-amplify/auth';
+import { LoadingButton } from '@mui/lab';
+import Loading from './Loading';
 
 const UserProfile = () => {
     
     const [user, setUser] = React.useState({});
+    const [isLoading, setIsLoading] = React.useState(true);
 
     React.useEffect(() => {
         fetchUserAttributes().then((attributes) => {
@@ -19,6 +22,7 @@ const UserProfile = () => {
                 points: 0,
                 rank: 'Gold',
             });
+            setIsLoading(false);
         });
     }, []);
 
@@ -29,6 +33,10 @@ const UserProfile = () => {
         { name: 'Platinum Badge', points: 1000 },
         { name: 'Diamond Badge', points: 1500 },
     ];
+
+    if (isLoading) {
+        return <Loading />;
+    }
 
     return (
         <Container>
