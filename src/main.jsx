@@ -11,7 +11,7 @@ Amplify.configure(outputs)
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-      <Authenticator>
+      <Authenticator signUpAttributes={["nickname"]}>
           <App />
       </Authenticator>
 

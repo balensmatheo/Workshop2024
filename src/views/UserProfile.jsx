@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Container, Box } from '@mui/material';
 import ProfileCard from '../components/ProfileCard';
 import Ladder from '../components/Progression';
@@ -17,10 +17,10 @@ const UserProfile = () => {
         fetchUserAttributes().then((attributes) => {
             console.log(attributes);
             setUser({
-                name: attributes.email,
+                name: attributes.nickname,
                 avatarUrl: attributes.picture,
                 points: 0,
-                rank: 'Gold',
+                rank: 'Novice',
             });
             setIsLoading(false);
         });
