@@ -18,15 +18,15 @@ const ProfileCard = ({user}) => {
     return (
         <Card sx={{ margin: '20px', padding: '10px' }}>
         <CardContent>
-            <Grid container spacing={2}>
-            <Grid item>
-                <Avatar alt={user.name} src={user.avatarUrl} sx={{ width: 80, height: 80, border: ranks.find(rank => rank.name === user.rank)?.border, backgroundColor: 'primary.main' }} />
-            </Grid>
-            <Grid item>
-                <Typography variant="h5">{user.name}</Typography>
-                <Typography variant="body1">Rank: {user.rank}</Typography>
-                <Typography variant="body1">Points: {user.points} (#3)</Typography>
-            </Grid>
+            <Grid container spacing={2} alignContent={'left'} justifyContent={'left'}>
+                <Grid item>
+                    <Avatar alt={user.name} src={user.avatarUrl} sx={{ width: 80, height: 80, border: ranks.find(rank => rank.name === user.rank)?.border, backgroundColor: 'primary.main' }} />
+                </Grid>
+                <Grid item>
+                    <Typography variant="h5">{user.name}</Typography>
+                    <Typography variant="body1">Rank: {user.rank}</Typography>
+                    <Typography variant="body1">Points: {user.points} (#3)</Typography>
+                </Grid>
             </Grid>
         </CardContent>
         </Card>
