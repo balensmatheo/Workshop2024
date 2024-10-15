@@ -9,6 +9,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import ErrorPage from './views/404';
+import Dashboard from './views/Dashboard';
 
 
 function App() {
@@ -18,6 +19,10 @@ function App() {
       path: "/",
       element: <SignIn />,
       errorElement: <ErrorPage />,
+    },
+    {
+      path: "/app/dashboard",
+      element: <Dashboard />,
     },
   ]);
 
