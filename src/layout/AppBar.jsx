@@ -15,6 +15,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, ListItemButton } from '@mui/material';
 import InboxIcon from '@mui/icons-material/Inbox';
+import { AccountCircleRounded, Dashboard, DashboardRounded, LeaderboardRounded } from '@mui/icons-material';
 
 export default function PrimarySearchAppBar() {
     const navigate = useNavigate();
@@ -167,24 +168,24 @@ export default function PrimarySearchAppBar() {
             open={drawerOpen}
             onClose={toggleDrawer(false)}
             sx={{
-            width: 240,
-            flexShrink: 0,
-            [`& .MuiDrawer-paper`]: { width: 240, boxSizing: 'border-box' },
+                width: 240,
+                [`& .MuiDrawer-paper`]: { width: 240, boxSizing: 'border-box' },
             }}
         >
             <Toolbar />
             <Box sx={{ overflow: 'auto' }}>
                 <List>
                     {[
-                        {'title': 'Dashboard', 'path': '/dashboard', 'icon': <InboxIcon />},
-                        {'title': 'Profile', 'path': '/me', 'icon': <InboxIcon />}
+                        {'title': 'Dashboard', 'path': '/dashboard', 'icon': <DashboardRounded />},
+                        {'title': 'Profile', 'path': '/me', 'icon': <AccountCircleRounded />},
+                        {'title': 'Leaderboard', 'path': '/leaderboard', 'icon': <LeaderboardRounded />},
                     ].map((item, index) => (
-                    <ListItem key={item.title} disablePadding>
-                        <ListItemIcon>
-                            {item.icon}
-                        </ListItemIcon>
+                    <ListItem key={item.title} >
                         <ListItemButton onClick={() => navigate(item.path)}>
-                        <ListItemText primary={item.title} />
+                            <ListItemIcon sx={{ mr: 0 }}>
+                                {item.icon}
+                            </ListItemIcon>
+                            <ListItemText primary={item.title} sx={{ ml: 0}} />
                         </ListItemButton>
                     </ListItem>
                     ))}

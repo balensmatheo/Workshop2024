@@ -14,6 +14,7 @@ import ErrorPage from './views/404';
 import Dashboard from './views/Dashboard';
 import PrimarySearchAppBar from './layout/AppBar';
 import UserProfile from './views/UserProfile';
+import Leaderboard from './views/Leaderboard';
 
 
 function App() {
@@ -35,6 +36,10 @@ function App() {
           { 
             path: "/me",
             element: <UserProfile />,
+          },
+          { 
+            path: "/leaderboard",
+            element: <Leaderboard />,
           }
       ]
     }
