@@ -4,7 +4,7 @@
             "splitTerminals": [
                 {
                     "name": "client",
-                    "commands": ["npm start"]
+                    "commands": ["npm run start"]
                 },
             ]
         },
