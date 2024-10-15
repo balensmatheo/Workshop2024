@@ -1,37 +1,30 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Container, Box } from '@mui/material';
 import ProfileCard from '../components/ProfileCard';
 import Ladder from '../components/Progression';
 import RewardLadder from '../components/RewardLadder';
 import RewardTimeline from '../components/RewardTimeline';
 import { fetchUserAttributes } from 'aws-amplify/auth';
+import { LoadingButton } from '@mui/lab';
+import Loading from './Loading';
 
 const UserProfile = () => {
-    useEffect(() => {
-        fetchAttributes();
+    
+    const [user, setUser] = React.useState({});
+    const [isLoading, setIsLoading] = React.useState(true);
+
+    React.useEffect(() => {
+        fetchUserAttributes().then((attributes) => {
+            console.log(attributes);
+            setUser({
+                name: attributes.nickname,
+                avatarUrl: attributes.picture,
+                points: 0,
+                rank: 'Novice',
+            });
+            setIsLoading(false);
+        });
     }, []);
-
-
-    const [attributes, setAttributes] = useState({});
-    const [user, setUser] = useState({
-        name: attributes.nickname,
-        avatarUrl: 'https://example.com/avatar.png', // Replace with actual avatar URL
-        points: 650,
-        rank: 'Gold',
-    });
-    async function fetchAttributes(){
-        const userAttributes = await fetchUserAttributes();
-        console.log(userAttributes);
-        setAttributes(userAttributes);
-        setUser({
-                name: userAttributes.nickname,
-                avatarUrl: 'https://example.com/avatar.png', // Replace with actual avatar URL
-                points: 650,
-                rank: 'Gold',
-            }
-        );
-
-    }
 
     const rewards = [
         { name: 'Bronze Badge', points: 100 },
@@ -40,6 +33,10 @@ const UserProfile = () => {
         { name: 'Platinum Badge', points: 1000 },
         { name: 'Diamond Badge', points: 1500 },
     ];
+
+    if (isLoading) {
+        return <Loading />;
+    }
 
     return (
         <Container>
