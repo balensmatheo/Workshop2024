@@ -13,6 +13,7 @@ import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
 import { Facebook, FacebookRounded, Google } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: 'flex',
@@ -61,6 +62,7 @@ export default function SignIn(props) {
     const [passwordError, setPasswordError] = React.useState(false);
     const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
     const [open, setOpen] = React.useState(false);
+    const navigate = useNavigate();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -71,6 +73,8 @@ export default function SignIn(props) {
     };
 
     const handleSubmit = (event) => {
+        navigate('/app/dashboard', { replace: true });
+
         if (emailError || passwordError) {
         event.preventDefault();
         return;
