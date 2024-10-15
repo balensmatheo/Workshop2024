@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, Button, Typography, Checkbox, List, ListItem, ListItemText, ListItemSecondaryAction, ListItemButton, IconButton } from '@mui/material';
+import { Card, CardContent, Button, Typography, Checkbox, List, ListItem, ListItemText, ListItemSecondaryAction, ListItemButton, IconButton, Chip } from '@mui/material';
 import { MoreVertRounded } from '@mui/icons-material';
 import { updateUserAttribute } from 'aws-amplify/auth';
+import { Grid } from '@aws-amplify/ui-react';
 
 const ToDoList = (props) => {
     const [listTasks, setListTasks] = useState(props.tasks || []);
@@ -28,7 +29,11 @@ const ToDoList = (props) => {
     return (
         <Card  elevation={7} sx={{ margin: '20px'}}>
         <CardContent>
-            <Typography variant="h6">{title}</Typography>
+            <Grid alignContent={'space-between'} justifyContent={'space-between'} columnDirection={'column'} display={'flex'} >
+                <Typography variant="h6">{title}</Typography>
+                <Chip label={listTasks.filter(task => task.completed).length + '/' + listTasks.length} sx={{ backgroundColor: 'primary.main', color: 'white', maxWidth: '80px' }} />
+            </Grid>
+
             <List>
             {listTasks.map((task, index) => (
                 <ListItem key={index}>
