@@ -22,7 +22,7 @@ const Dashboard = () => {
     ];
 
     return (
-        <Grid container spacing={2} sx={{ backgroundColor: 'primary.main', padding: '20px', margin:0 }}>
+        <Grid container sx={{ backgroundColor: 'primary.main', margin:0 }}>
             <Grid item xs={4}>
                 <ToDoList tasks={dailyTasks} title="Daily Tasks" />
             </Grid>
