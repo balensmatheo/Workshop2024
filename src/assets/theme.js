@@ -10,6 +10,10 @@ const theme = createTheme({
             main: '#f50057',
         },
     },
+    zIndex: {
+        appBar: 1200,
+        drawer: 1100,
+    },
 });
 
 export default theme;
