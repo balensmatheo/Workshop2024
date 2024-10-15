@@ -3,12 +3,12 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 
 // Sample leaderboard data (you can replace this with real data)
 const leaderboardData = [
-    { name: 'User A', score: 1500 },
-    { name: 'User D', score: 600 },
-    { name: 'User C', score: 900 },
-    { name: 'User B', score: 1250 },
-    { name: 'User E', score: 300 },
-    { name: 'User F', score: 100 },
+    { name: 'Jean-Pierre Gentil', score: 1500 },
+    { name: 'Arthur Gradur', score: 600 },
+    { name: 'Raoul Coule', score: 900 },
+    { name: 'Bertrand Bienveillant', score: 1250 },
+    { name: 'Pierre', score: 300 },
+    { name: 'Rémi', score: 100 },
 ];
 
 // Leaderboard Component
@@ -33,7 +33,7 @@ const Leaderboard = () => {
             <TableBody>
                 {sortedUsers.map((user, index) => (
                 <TableRow key={user.name}>
-                    <TableCell align="center">{index + 1}</TableCell> {/* Rank */}
+                    <TableCell align="center">{index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : index + 1} </TableCell> {/* Rank */}
                     <TableCell>{user.name}</TableCell> {/* User Name */}
                     <TableCell align="right">{user.score}</TableCell> {/* User Score */}
                 </TableRow>

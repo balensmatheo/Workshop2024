@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, Button, Typography, Checkbox, List, ListItem, ListItemText, ListItemSecondaryAction, ListItemButton } from '@mui/material';
+import { Card, CardContent, Button, Typography, Checkbox, List, ListItem, ListItemText, ListItemSecondaryAction, ListItemButton, IconButton } from '@mui/material';
+import { MoreVertRounded } from '@mui/icons-material';
 
 const ToDoList = (props) => {
     const [listTasks, setListTasks] = useState(props.tasks || []);
@@ -7,7 +8,7 @@ const ToDoList = (props) => {
 
 
     return (
-        <Card style={{ margin: '20px' }}>
+        <Card  elevation={7} sx={{ margin: '20px'}}>
         <CardContent>
             <Typography variant="h6">{title}</Typography>
             <List>
@@ -19,7 +20,9 @@ const ToDoList = (props) => {
                         secondary={task.description}
                     />
                     <ListItemButton>
-                        Learn More
+                        <IconButton edge="end" aria-label="more">
+                            <MoreVertRounded />
+                        </IconButton>
                     </ListItemButton>
                 </ListItem>
             ))}

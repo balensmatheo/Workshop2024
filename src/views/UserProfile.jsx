@@ -4,14 +4,23 @@ import ProfileCard from '../components/ProfileCard';
 import Ladder from '../components/Progression';
 import RewardLadder from '../components/RewardLadder';
 import RewardTimeline from '../components/RewardTimeline';
+import { fetchUserAttributes } from 'aws-amplify/auth';
 
 const UserProfile = () => {
-    const [user, setUser] = useState({
-        name: 'John Doe',
-        avatarUrl: 'https://example.com/avatar.png', // Replace with actual avatar URL
-        points: 650,
-        rank: 'Gold',
-    });
+    
+    const [user, setUser] = React.useState({});
+
+    React.useEffect(() => {
+        fetchUserAttributes().then((attributes) => {
+            console.log(attributes);
+            setUser({
+                name: attributes.email,
+                avatarUrl: attributes.picture,
+                points: 0,
+                rank: 'Gold',
+            });
+        });
+    }, []);
 
     const rewards = [
         { name: 'Bronze Badge', points: 100 },

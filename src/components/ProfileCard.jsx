@@ -1,8 +1,10 @@
 import React from 'react';
-import { Card, CardContent, Typography, Avatar, Grid } from '@mui/material';
+import { Card, CardContent, Typography, Avatar, Badge } from '@mui/material';
+import Grid from '@mui/material/Grid2';
+import { Star, StarBorderOutlined } from '@mui/icons-material';
+import { fetchUserAttributes } from 'aws-amplify/auth';
 
-const ProfileCard = ({ user }) => {
-
+const ProfileCard = ({user}) => {
 
     const ranks = [
         { name: 'Bronze', points: 100, 'border': '4px solid #CD7F32' },
@@ -14,16 +16,16 @@ const ProfileCard = ({ user }) => {
 
 
     return (
-        <Card style={{ margin: '20px', padding: '10px' }}>
+        <Card sx={{ margin: '20px', padding: '10px' }}>
         <CardContent>
-            <Grid container spacing={2} alignItems="center">
+            <Grid container spacing={2}>
             <Grid item>
-                <Avatar alt={user.name} src={user.avatarUrl} sx={{ width: 80, height: 80, border: ranks.find(rank => rank.name === user.rank).border, backgroundColor: 'primary.main' }} />
+                <Avatar alt={user.name} src={user.avatarUrl} sx={{ width: 80, height: 80, border: ranks.find(rank => rank.name === user.rank)?.border, backgroundColor: 'primary.main' }} />
             </Grid>
             <Grid item>
                 <Typography variant="h5">{user.name}</Typography>
                 <Typography variant="body1">Rank: {user.rank}</Typography>
-                <Typography variant="body1">Points: {user.points}</Typography>
+                <Typography variant="body1">Points: {user.points} (#3)</Typography>
             </Grid>
             </Grid>
         </CardContent>
