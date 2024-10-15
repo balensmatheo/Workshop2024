@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@aws-amplify/backend": "^1.4.0",
+    "@aws-amplify/backend-cli": "^1.2.9",
+    "@aws-amplify/ui-react": "^6.5.3",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^6.1.3",
