@@ -40,6 +40,7 @@ export default function PrimarySearchAppBar() {
 
     const handleLogout = async () => {
         await signOut();
+        console.log("alert")
     };
 
     const handleMobileMenuClose = () => {
