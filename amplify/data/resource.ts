@@ -5,7 +5,13 @@ const schema = a.schema({
     content: a.string(),
     isDone: a.boolean()
   })
-      .authorization(allow => [allow.publicApiKey()])
+      .authorization(allow => [allow.owner()]),
+
+  User: a.model({
+    username: a.string(), // Ajout d'un champ pour le nom d'utilisateur, qui doit être unique
+    points: a.integer()       // Champ pour le nombre de points
+  })
+      .authorization(allow => [allow.owner()])
 });
 
 // Used for code completion / highlighting when making requests from frontend
@@ -15,7 +21,7 @@ export type Schema = ClientSchema<typeof schema>;
 export const data = defineData({
   schema,
   authorizationModes: {
-    defaultAuthorizationMode: 'apiKey',
+    defaultAuthorizationMode: 'userPool',
     apiKeyAuthorizationMode: { expiresInDays: 30 }
   }
 });
