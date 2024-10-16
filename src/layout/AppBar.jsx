@@ -142,7 +142,7 @@ export default function PrimarySearchAppBar() {
                             component="div"
                             sx={{ display: { xs: 'none', sm: 'block' } }}
                         >
-                            Socisan
+                            SociSan
                         </Typography>
                     </Link>
                     <Box sx={{ flexGrow: 1 }} />
@@ -211,8 +211,8 @@ export default function PrimarySearchAppBar() {
                     <List>
                         {[
                             {'title': 'Dashboard', 'path': '/dashboard', 'icon': <DashboardRounded />},
-                            {'title': 'Profile', 'path': '/me', 'icon': <AccountCircleRounded />},
                             {'title': 'Leaderboard', 'path': '/leaderboard', 'icon': <LeaderboardRounded />},
+                            {'title': 'Profile', 'path': '/me', 'icon': <AccountCircleRounded />},
                         ].map((item) => (
                             <ListItem key={item.title}>
                                 <ListItemButton onClick={() => navigate(item.path)}>

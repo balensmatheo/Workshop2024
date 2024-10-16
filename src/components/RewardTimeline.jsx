@@ -22,7 +22,7 @@ const RewardTimeline = ({ currentPoints, rewards }) => {
             const index = rewards.length - 1 - reversedIndex;
             const isUnlocked = currentPoints >= reward.points;
             const isCurrent = index === unlockedRewardIndex;
-            const progressIcon = isUnlocked ? <CheckCircleIcon color="success" /> : <LockIcon />;
+            const progressIcon = isUnlocked ? <CheckCircleIcon color="background" /> : <LockIcon />;
             
             // Calculate the connector progress color
             const connectorProgress = index > 0 ? getProgressToNextReward(index - 1) : 0;
@@ -55,10 +55,10 @@ const RewardTimeline = ({ currentPoints, rewards }) => {
                         </Typography>
                         {isCurrent ? (
                         <Typography variant="h6" color="primary">
-                            {`Current goal: ${reward.points} points`}
+                            {`Objectif actuel: ${reward.points} points`}
                         </Typography>
                         ) : (
-                        <Typography>{`Unlock at ${reward.points} points`}</Typography>
+                        <Typography>{`Débloquer à ${reward.points} points`}</Typography>
                         )}
                     </TimelineContent>
                 </TimelineItem>

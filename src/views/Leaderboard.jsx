@@ -32,7 +32,7 @@ return (
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell align="center"><strong>Rank</strong></TableCell>
+                            <TableCell align="center"><strong>Rang</strong></TableCell>
                             <TableCell><strong>User</strong></TableCell>
                             <TableCell align="right"><strong>Score</strong></TableCell>
                         </TableRow>
@@ -40,7 +40,7 @@ return (
                     <TableBody>
                         {datas.sort((a, b) => b.score - a.score).map((user, index) => (
                             <TableRow key={user.name}>
-                                <TableCell align="center">{index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : index + 1} </TableCell> {/* Rank */}
+                                <TableCell align="center">{index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : index + 1} </TableCell> {/* Rang */}
                                 <TableCell>{user.name}</TableCell> {/* User Name */}
                                 <TableCell align="right">{user.score}</TableCell> {/* User Score */}
                             </TableRow>
