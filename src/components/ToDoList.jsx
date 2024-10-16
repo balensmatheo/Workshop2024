@@ -1,54 +1,100 @@
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent, Button, Typography, Checkbox, List, ListItem, ListItemText, ListItemSecondaryAction, ListItemButton, IconButton, Chip } from '@mui/material';
-import { MoreVertRounded } from '@mui/icons-material';
-import { updateUserAttribute } from 'aws-amplify/auth';
-import { Grid } from '@aws-amplify/ui-react';
+// ToDoList.js
+import React from 'react';
+import { List, ListItem, ListItemIcon, ListItemText, Checkbox, Card, CardContent, Typography, Box, Badge } from '@mui/material';
+import { generateClient } from 'aws-amplify/data';
 
-const ToDoList = (props) => {
-    const [listTasks, setListTasks] = useState(props.tasks || []);
-    const [title, setTitle] = useState(props.title || 'ToDoList');
+const client = generateClient();
 
-    const handleOnChange = (event) => {
-        console.log(event.target);
-        const index = event.target.id;
-        console.log(index);
-        const newListTasks = [...listTasks];
-        console.log(newListTasks);
-        newListTasks[index].completed = !newListTasks[index].completed;
-
-        addUser('tasks', newListTasks).then(() => {
-            console.log('Task updated');
+const ToDoList = ({ tasks, title }) => {
+    const handleToggle = async (task) => {
+        // Bascule l'état de la tâche isDone
+        try {
+            const updatedTask = await client.models.Todo.update({
+                id: task.id,
+                isDone: !task.isDone,
+            });
+            console.log(`Task "${updatedTask.title}" updated successfully!`);
+        } catch (error) {
+            console.error(`Failed to update task ${task.title}:`, error);
         }
-        ).catch((error) => {
-            console.error('Error updating task', error);
-        });
-
-        setListTasks(newListTasks);
-    }
+    };
 
     return (
-        <Card  elevation={7} sx={{ margin: '20px'}}>
-        <CardContent>
-            <Grid alignContent={'space-between'} justifyContent={'space-between'} columnDirection={'column'} display={'flex'} >
-                <Typography variant="h6">{title}</Typography>
-                <Chip label={listTasks.filter(task => task.completed).length + '/' + listTasks.length} sx={{ backgroundColor: 'primary.main', color: 'white', maxWidth: '80px' }} />
-            </Grid>
+        <Card sx={{ boxShadow: 5, borderRadius: 4, mb: 4, mt:2,  mx: 2, backgroundColor: "#7abb4b" }}>
+            <CardContent>
+                <Typography variant="h5" component="div" sx={{ mb: 2, textAlign: 'center', fontWeight: 'bold', color: 'white' }}>
+                    {title}
+                </Typography>
+                <Box sx={{ maxHeight: 400, overflow: 'auto' }}>
+                    <List>
+                        {tasks.map((task) => (
+                            <ListItem key={task.id} disablePadding>
+                                <Box
+                                    component="div"
+                                    sx={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        width: '100%',
+                                        backgroundColor: 'background.paper',
+                                        mb: 1,
+                                        px: 2,
+                                        py: 1,
+                                        borderRadius: 2,
+                                        boxShadow: 2,
+                                    }}
+                                >
+                                    <ListItemIcon>
+                                        <Checkbox
+                                            edge="start"
+                                            checked={task.isDone}
+                                            onChange={() => handleToggle(task)}
+                                            tabIndex={-1}
+                                            disableRipple
+                                            inputProps={{ 'aria-labelledby': task.id }}
+                                        />
+                                    </ListItemIcon>
+                                    <ListItemText
+                                        id={task.id}
+                                        primary={
+                                            <Typography
+                                                variant="h6"
+                                                sx={{
+                                                    textDecoration: task.isDone ? 'line-through' : 'none',
+                                                    color: task.isDone ? 'text.secondary' : 'text.primary',
 
-            <List>
-            {listTasks.map((task, index) => (
-                <ListItem key={index}>
-                    <Checkbox checked={!!task.completed} onChange={(event) => handleOnChange(event)} id={index} />
-                    <ListItemText
-                        primary={task.title}
-                        secondary={task.description}
-                    />
-                    <IconButton edge="end" aria-label="more" sx={{ marginLeft: '10px' }}>
-                        <MoreVertRounded />
-                    </IconButton>
-                </ListItem>
-            ))}
-            </List>
-        </CardContent>
+                                                }}
+                                            >
+                                                {task.title}
+                                            </Typography>
+                                        }
+                                        secondary={
+                                            <Typography
+                                                variant="body2"
+                                                sx={{
+                                                    color: task.isDone ? 'text.secondary' : 'text.primary',
+                                                }}
+                                            >
+                                                {task.description}
+                                            </Typography>
+                                        }
+                                    />
+                                        <Badge color="primary">
+                                            <Typography
+                                                variant="subtitle2"
+                                                sx={{
+                                                    fontWeight: 'bold',
+                                                    color: 'primary.main',
+                                                }}
+                                            >
+                                                {task.points} points
+                                            </Typography>
+                                        </Badge>
+                                </Box>
+                            </ListItem>
+                        ))}
+                    </List>
+                </Box>
+            </CardContent>
         </Card>
     );
 };

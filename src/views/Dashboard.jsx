@@ -11,29 +11,47 @@ const Dashboard = () => {
     const [monthlyTasks, setMonthlyTasks] = useState([]);
 
     useEffect(() => {
-        const fetchWeeklyTodos = async () => {
+        const fetchTodos = async () => {
             try {
-                const result = await client.models.Todo.list();
-                console.log(result.data);
-                setWeeklyTasks(result.data);
+                const daily = await client.models.Todo.list({
+                    filter: {
+                        isDaily: { eq: true },
+                    },
+                });
+                const weekly = await client.models.Todo.list({
+                    filter: {
+                        isWeekly: { eq: true },
+                    },
+                });
+                const monthly = await client.models.Todo.list({
+                    filter: {
+                        isMonthly: { eq: true },
+                    },
+                });
+                setWeeklyTasks(weekly.data);
+                setDailytasks(daily.data);
+                setMonthlyTasks(monthly.data);
+                console.log(daily.data);
+                console.log(weekly.data);
+                console.log(monthly.data);
             } catch (error) {
                 console.error("Failed to fetch weekly todos:", error);
             }
         };
 
-        fetchWeeklyTodos();
+        fetchTodos();
     }, []);
 
     return (
         <Grid container spacing={2}>
             <Grid item xs={12} md={4}>
-                <ToDoList tasks={dailyTasks} title="Daily Tasks" />
+                <ToDoList tasks={dailyTasks} title="Tâches Quotidiennes" />
             </Grid>
             <Grid item xs={12} md={4}>
-                <ToDoList tasks={weeklyTasks} title="Weekly Tasks" />
+                <ToDoList tasks={weeklyTasks} title="Tâches Hebdomadaires" />
             </Grid>
             <Grid item xs={12} md={4}>
-                <ToDoList tasks={monthlyTasks} title="Monthly Tasks" />
+                <ToDoList tasks={monthlyTasks} title="Tâches Mensuelles" />
             </Grid>
         </Grid>
     );
