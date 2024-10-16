@@ -14,6 +14,7 @@ import Dashboard from './views/Dashboard';
 import PrimarySearchAppBar from './layout/AppBar';
 import UserProfile from './views/UserProfile';
 import Leaderboard from './views/Leaderboard';
+import AdminView from './views/AdminView';
 import { fetchUserAttributes } from 'aws-amplify/auth';
 
 
@@ -45,6 +46,10 @@ function App() {
           { 
             path: "/leaderboard",
             element: <Leaderboard />,
+          },
+          {
+              path: "/admin",
+              element: <AdminView />,
           }
       ]
     }

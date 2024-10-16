@@ -17,7 +17,7 @@ const Leaderboard = () => {
 
     useEffect(() => {
         fetchUserAttributes().then((attributes) => {
-            setDatas((prevDatas) => [...prevDatas, { name: attributes.email, score: attributes.score || 0 }]);
+            setDatas((prevDatas) => [...prevDatas, { name: attributes.nickname, score: attributes.score || 0 }]);
         });
     }, []);
 

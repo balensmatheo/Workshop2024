@@ -15,15 +15,15 @@ const UserProfile = () => {
 
     React.useEffect(() => {
         fetchUserAttributes().then((attributes) => {
-            console.log(attributes);
+
             setUser({
                 name: attributes.nickname,
                 avatarUrl: attributes.picture,
                 points: 0,
                 rank: 'Novice',
             });
-            setIsLoading(false);
         });
+        setIsLoading(false);
     }, []);
 
     const rewards = [

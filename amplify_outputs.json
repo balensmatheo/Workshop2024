@@ -46,8 +46,15 @@
               "isRequired": true,
               "attributes": []
             },
-            "content": {
-              "name": "content",
+            "title": {
+              "name": "title",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "description": {
+              "name": "description",
               "isArray": false,
               "type": "String",
               "isRequired": false,
@@ -57,6 +64,34 @@
               "name": "isDone",
               "isArray": false,
               "type": "Boolean",
+              "isRequired": false,
+              "attributes": []
+            },
+            "isDaily": {
+              "name": "isDaily",
+              "isArray": false,
+              "type": "Boolean",
+              "isRequired": false,
+              "attributes": []
+            },
+            "isWeekly": {
+              "name": "isWeekly",
+              "isArray": false,
+              "type": "Boolean",
+              "isRequired": false,
+              "attributes": []
+            },
+            "isMonthly": {
+              "name": "isMonthly",
+              "isArray": false,
+              "type": "Boolean",
+              "isRequired": false,
+              "attributes": []
+            },
+            "points": {
+              "name": "points",
+              "isArray": false,
+              "type": "Int",
               "isRequired": false,
               "attributes": []
             },
