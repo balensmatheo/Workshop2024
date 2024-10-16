@@ -25,15 +25,15 @@ const Dashboard = () => {
     }, []);
 
     return (
-        <Grid container spacing={2}>
-            <Grid item xs={12} md={4}>
-                <ToDoList tasks={dailyTasks} title="Daily Tasks" />
+        <Grid container sx={{ backgroundColor: 'primary.main', margin:0 }}>
+            <Grid item xs={4}>
+                <ToDoList tasks={dailyTasks} title="Tâches quotidiennes" />
             </Grid>
-            <Grid item xs={12} md={4}>
-                <ToDoList tasks={weeklyTasks} title="Weekly Tasks" />
+            <Grid item xs={4}>
+                <ToDoList tasks={weeklyTasks} title="Tâches dromadaires" />
             </Grid>
-            <Grid item xs={12} md={4}>
-                <ToDoList tasks={monthlyTasks} title="Monthly Tasks" />
+            <Grid item xs={4}>
+                <ToDoList tasks={monthlyTasks} title="Tâches mensuelles" />
             </Grid>
         </Grid>
     );
