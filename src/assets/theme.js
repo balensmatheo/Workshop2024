@@ -9,6 +9,9 @@ const theme = createTheme({
         secondary: {
             main: '#f50057',
         },
+        background: {
+            main: '#f0f0f0',
+        },
     },
     zIndex: {
         appBar: 1200,

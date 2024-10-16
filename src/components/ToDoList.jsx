@@ -42,11 +42,9 @@ const ToDoList = (props) => {
                         primary={task.title}
                         secondary={task.description}
                     />
-                    <ListItemButton>
-                        <IconButton edge="end" aria-label="more">
-                            <MoreVertRounded />
-                        </IconButton>
-                    </ListItemButton>
+                    <IconButton edge="end" aria-label="more" sx={{ marginLeft: '10px' }}>
+                        <MoreVertRounded />
+                    </IconButton>
                 </ListItem>
             ))}
             </List>

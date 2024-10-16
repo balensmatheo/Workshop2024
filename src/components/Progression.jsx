@@ -6,16 +6,11 @@ const Ladder = ({ points, maxPoints, rankUp }) => {
 
     return (
         <Box sx={{ margin: '20px' }}>
-        <Typography variant="h6">Progress to next rank</Typography>
-        <LinearProgress variant="determinate" value={progress} />
-        <Typography variant="body2">
-            {points}/{maxPoints} points
-        </Typography>
-        {points >= maxPoints && (
-            <Typography variant="body1" color="primary" sx={{ marginTop: '10px' }}>
-            Congratulations! You've ranked up.
+            <Typography variant="h6">Progression vers le prochain niveau :</Typography>
+            <LinearProgress variant="determinate" value={progress} color="primary" />
+            <Typography variant="body2">
+                {points}/{maxPoints} points
             </Typography>
-        )}
         </Box>
     );
 };
