@@ -28,9 +28,9 @@
     "url": "https://t5fre3ionbdgthz7em2wvbhs4y.appsync-api.eu-west-1.amazonaws.com/graphql",
     "aws_region": "eu-west-1",
     "api_key": "da2-oo42awogtrfexh5u6uddcevv34",
-    "default_authorization_type": "AMAZON_COGNITO_USER_POOLS",
+    "default_authorization_type": "API_KEY",
     "authorization_types": [
-      "API_KEY",
+      "AMAZON_COGNITO_USER_POOLS",
       "AWS_IAM"
     ],
     "model_introspection": {
@@ -124,10 +124,8 @@
               "properties": {
                 "rules": [
                   {
-                    "provider": "userPools",
-                    "ownerField": "owner",
-                    "allow": "owner",
-                    "identityClaim": "cognito:username",
+                    "allow": "public",
+                    "provider": "apiKey",
                     "operations": [
                       "create",
                       "update",
