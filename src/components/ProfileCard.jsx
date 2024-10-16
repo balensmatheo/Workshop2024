@@ -18,7 +18,6 @@ const ProfileCard = ({user, ranks}) => {
                 <Grid item>
                     <Typography variant="h5">{user.name}</Typography>
                     <Typography variant="body1">Rang: {user.rank}</Typography>
-                    <Typography variant="body1">Points: {user.points} (#3)</Typography>
                 </Grid>
             </Grid>
         </CardContent>

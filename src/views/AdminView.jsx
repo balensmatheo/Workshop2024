@@ -13,6 +13,21 @@ export default function AdminView() {
     const isMonthlyRef = useRef(null);
     const pointsRef = useRef(null);
 
+    const resetUserPoints = async () => {
+        try {
+            const user = await client.models.User.list();
+            await client.models.User.update({
+                id: user.data[0].id,
+                points: 0,
+            });
+            window.location.reload();
+            alert("User points reset successfully!");
+        } catch (error) {
+            console.error("Failed to reset user points:", error);
+            alert("An error occurred while resetting user points.");
+        }
+    };
+
     const createTodo = async (event) => {
         event.preventDefault();
 
@@ -99,6 +114,14 @@ export default function AdminView() {
                     Submit
                 </Button>
             </form>
+            <Button
+                onClick={() => resetUserPoints()}
+                variant="contained"
+                color="primary"
+                sx={{ mt: 2 }}
+            >
+                reset points
+            </Button>
         </Container>
     );
 }

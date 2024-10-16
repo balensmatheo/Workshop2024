@@ -10,7 +10,7 @@ const schema = a.schema({
     isMonthly: a.boolean(),
     points: a.integer()
   })
-      .authorization(allow => [allow.publicApiKey()]),
+      .authorization(allow => [allow.authenticated()]),
 
   User: a.model({
     username: a.string(), // Ajout d'un champ pour le nom d'utilisateur, qui doit être unique
@@ -26,7 +26,7 @@ export type Schema = ClientSchema<typeof schema>;
 export const data = defineData({
   schema,
   authorizationModes: {
-    defaultAuthorizationMode: 'apiKey',
+    defaultAuthorizationMode: 'userPool',
     apiKeyAuthorizationMode: { expiresInDays: 30 }
   }
 });

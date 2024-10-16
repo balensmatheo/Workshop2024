@@ -16,15 +16,44 @@ import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, ListItemButton, LinearProgress } from '@mui/material';
 import InboxIcon from '@mui/icons-material/Inbox';
 import { AccountCircleRounded, DashboardRounded, LeaderboardRounded, Logout } from '@mui/icons-material';
-import { fetchUserAttributes, signOut } from 'aws-amplify/auth';
-import Progression from '../components/Progression';
-import { Grid } from '@aws-amplify/ui-react';
+import { generateClient } from 'aws-amplify/data';
+import {useEffect} from "react";
 
+const client = generateClient();
 
 export default function PrimarySearchAppBar() {
     const navigate = useNavigate();
 
     const [drawerOpen, setDrawerOpen] = React.useState(false);
+    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+    const [user, setUser] = React.useState({});
+    const [isLoading, setIsLoading] = React.useState(true);
+    const [points, setPoints] = React.useState(0);
+
+    useEffect(() => {
+        const fetchUserPoints = async () => {
+            try {
+                const user = await client.models.User.list();
+                setPoints(user.data[0].points);
+                setUser({
+                    name: user.nickname,
+                    avatarUrl: user.picture,
+                    points: points,
+                    rank: user.rank || 'Novice',
+                });
+                setIsLoading(false);
+            } catch (error) {
+                console.error("Failed to fetch user points:", error);
+                setIsLoading(false);
+            }
+        };
+
+        fetchUserPoints();
+    }, []);
+
+    const maxPoints = 1000;
+    const progress = (points / maxPoints) * 100;
 
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -32,9 +61,6 @@ export default function PrimarySearchAppBar() {
         }
         setDrawerOpen(open);
     };
-
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
     const handleProfileClick = () => {
         navigate('/me');
@@ -102,25 +128,6 @@ export default function PrimarySearchAppBar() {
         </Menu>
     );
 
-    const [user, setUser] = React.useState({});
-    const [isLoading, setIsLoading] = React.useState(true);
-
-    React.useEffect(() => {
-        fetchUserAttributes().then((attributes) => {
-            console.log(attributes);
-            setUser({
-                name: attributes.nickname,
-                avatarUrl: attributes.picture,
-                points: attributes.score || 500,
-                rank: attributes.rank || 'Novice',
-            });
-            setIsLoading(false);
-        });
-    }, []);
-
-    const maxPoints = 1000;
-    const progress = (user.points / maxPoints) * 100;
-
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
@@ -146,9 +153,9 @@ export default function PrimarySearchAppBar() {
                         </Typography>
                     </Link>
                     <Box sx={{ flexGrow: 1 }} />
-                    
+
                     <Typography variant="body2" sx={{ ml: 1, color: 'background' }}>
-                        {`${user.points}`}
+                        {`${points} points`}
                     </Typography>
 
                     <Box sx={{ width: '40vw' }}>
@@ -157,7 +164,7 @@ export default function PrimarySearchAppBar() {
 
                     <Typography variant="body2" sx={{ ml: 1, color: 'background' }}>
                         {`${maxPoints} points`}
-                        </Typography>
+                    </Typography>
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <IconButton size="large" aria-label="show 4 new mails" color="inherit">

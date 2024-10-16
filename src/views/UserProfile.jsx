@@ -7,13 +7,15 @@ import RewardTimeline from '../components/RewardTimeline';
 import { fetchUserAttributes } from 'aws-amplify/auth';
 import { LoadingButton } from '@mui/lab';
 import Loading from './Loading';
+import {generateClient} from "aws-amplify/data";
+
+const client = generateClient();
 
 const UserProfile = () => {
     
     const [user, setUser] = React.useState({});
     const [isLoading, setIsLoading] = React.useState(true);
 
-    
 
     const rewards = [
         { name: 'Badge de Bronze', points: 100 },
@@ -35,18 +37,23 @@ const UserProfile = () => {
         { name: 'Platine', points: 1000, 'border': '4px solid #E5E4E2' },
         { name: 'Diamant', points: 1500, 'border': '4px solid #b9f2ff' },
     ];
+    const [points, setPoints] = React.useState(0);
 
     React.useEffect(() => {
+        client.models.User.list().then((users) => {
+            setPoints(users.data[0].points);
+        });
         fetchUserAttributes().then((attributes) => {
 
             setUser({
                 name: attributes.nickname,
                 avatarUrl: attributes.picture,
-                points: attributes.score || 500,
                 rank: ranks.find(rank => rank.points <= attributes.score)?.name || 'Argent',
             });
         });
+
         setIsLoading(false);
+
     }, []);
     if (isLoading) {
         return <Loading />;
@@ -55,8 +62,8 @@ const UserProfile = () => {
     return (
         <Container>
         <ProfileCard user={user} ranks={ranks} />
-        <Ladder points={user.points} maxPoints={1000}  />
-        <RewardTimeline currentPoints={user.points} rewards={rewards} />
+        <Ladder points={points} maxPoints={1000}  />
+        <RewardTimeline currentPoints={points} rewards={rewards} />
 
         </Container>
     );
