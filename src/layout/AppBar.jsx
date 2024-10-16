@@ -13,10 +13,12 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, ListItemButton } from '@mui/material';
+import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, ListItemButton, LinearProgress } from '@mui/material';
 import InboxIcon from '@mui/icons-material/Inbox';
 import { AccountCircleRounded, DashboardRounded, LeaderboardRounded, Logout } from '@mui/icons-material';
-import { signOut } from 'aws-amplify/auth';
+import { fetchUserAttributes, signOut } from 'aws-amplify/auth';
+import Progression from '../components/Progression';
+import { Grid } from '@aws-amplify/ui-react';
 
 
 export default function PrimarySearchAppBar() {
@@ -100,6 +102,25 @@ export default function PrimarySearchAppBar() {
         </Menu>
     );
 
+    const [user, setUser] = React.useState({});
+    const [isLoading, setIsLoading] = React.useState(true);
+
+    React.useEffect(() => {
+        fetchUserAttributes().then((attributes) => {
+            console.log(attributes);
+            setUser({
+                name: attributes.nickname,
+                avatarUrl: attributes.picture,
+                points: attributes.score || 500,
+                rank: attributes.rank || 'Novice',
+            });
+            setIsLoading(false);
+        });
+    }, []);
+
+    const maxPoints = 1000;
+    const progress = (user.points / maxPoints) * 100;
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
@@ -124,6 +145,19 @@ export default function PrimarySearchAppBar() {
                             Socisan
                         </Typography>
                     </Link>
+                    <Box sx={{ flexGrow: 1 }} />
+                    
+                    <Typography variant="body2" sx={{ ml: 1, color: 'background' }}>
+                        {`${user.points}`}
+                    </Typography>
+
+                    <Box sx={{ width: '40vw' }}>
+                        <LinearProgress variant="determinate" value={progress}  sx={{ ml: 2, '& .MuiLinearProgress-bar': { backgroundColor: 'background.main' } }} />
+                    </Box>
+
+                    <Typography variant="body2" sx={{ ml: 1, color: 'background' }}>
+                        {`${maxPoints} points`}
+                        </Typography>
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <IconButton size="large" aria-label="show 4 new mails" color="inherit">

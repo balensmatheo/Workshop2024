@@ -7,7 +7,7 @@ const Ladder = ({ points, maxPoints, rankUp }) => {
     return (
         <Box sx={{ margin: '20px' }}>
         <Typography variant="h6">Progress to next rank</Typography>
-        <LinearProgress variant="determinate" value={progress} />
+        <LinearProgress variant="determinate" value={progress} color="primary" />
         <Typography variant="body2">
             {points}/{maxPoints} points
         </Typography>
