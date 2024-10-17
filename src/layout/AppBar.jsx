@@ -217,9 +217,9 @@ export default function PrimarySearchAppBar() {
                 <Box sx={{ overflow: 'auto' }}>
                     <List>
                         {[
-                            {'title': 'Dashboard', 'path': '/dashboard', 'icon': <DashboardRounded />},
-                            {'title': 'Leaderboard', 'path': '/leaderboard', 'icon': <LeaderboardRounded />},
-                            {'title': 'Profile', 'path': '/me', 'icon': <AccountCircleRounded />},
+                            {'title': 'Tableau de bord', 'path': '/dashboard', 'icon': <DashboardRounded />},
+                            {'title': 'Tableau des scores', 'path': '/leaderboard', 'icon': <LeaderboardRounded />},
+                            {'title': 'Profil', 'path': '/me', 'icon': <AccountCircleRounded />},
                         ].map((item) => (
                             <ListItem key={item.title}>
                                 <ListItemButton onClick={() => navigate(item.path)}>
