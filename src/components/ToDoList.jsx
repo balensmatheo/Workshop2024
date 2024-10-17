@@ -4,7 +4,7 @@ import { generateClient } from 'aws-amplify/data';
 
 const client = generateClient();
 
-const ToDoList = ({ tasks = [], title, setTasks, setCompletedTasks, isCompletedList = false }) => {
+const ToDoList = ({ tasks = [], title, setTasks, setCompletedTasks, isCompletedList = false, setPoints }) => {
     const [taskList, setTaskList] = useState([]);
 
     useEffect(() => {
@@ -56,6 +56,7 @@ const ToDoList = ({ tasks = [], title, setTasks, setCompletedTasks, isCompletedL
                 });
                 console.log("User points updated successfully!")
             }
+            setPoints(prevPoints => prevPoints + points);
 
         } catch (error) {
             console.error("Failed to update user points:", error);

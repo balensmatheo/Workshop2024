@@ -21,7 +21,7 @@ import {useEffect} from "react";
 
 const client = generateClient();
 
-export default function PrimarySearchAppBar() {
+export default function PrimarySearchAppBar({ points, setPoints }) {
     const navigate = useNavigate();
 
     const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -29,28 +29,6 @@ export default function PrimarySearchAppBar() {
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     const [user, setUser] = React.useState({});
     const [isLoading, setIsLoading] = React.useState(true);
-    const [points, setPoints] = React.useState(0);
-
-    useEffect(() => {
-        const fetchUserPoints = async () => {
-            try {
-                const user = await client.models.User.list();
-                setPoints(user.data[0].points);
-                setUser({
-                    name: user.nickname,
-                    avatarUrl: user.picture,
-                    points: points,
-                    rank: user.rank || 'Novice',
-                });
-                setIsLoading(false);
-            } catch (error) {
-                console.error("Failed to fetch user points:", error);
-                setIsLoading(false);
-            }
-        };
-
-        fetchUserPoints();
-    }, []);
 
     const maxPoints = 1000;
     const progress = (points / maxPoints) * 100;

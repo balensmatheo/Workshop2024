@@ -6,7 +6,7 @@ import { generateClient } from 'aws-amplify/data';
 
 const client = generateClient();
 
-const Dashboard = () => {
+const Dashboard = ({ points, setPoints }) => {
     const [dailyTasks, setDailyTasks] = useState([]);
     const [weeklyTasks, setWeeklyTasks] = useState([]);
     const [monthlyTasks, setMonthlyTasks] = useState([]);
@@ -61,18 +61,18 @@ const Dashboard = () => {
         <>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={4}>
-                    <ToDoList tasks={dailyTasks} title="Tâches Quotidiennes" setTasks={setDailyTasks} setCompletedTasks={setCompletedTasks} />
+                    <ToDoList tasks={dailyTasks} title="Tâches Quotidiennes" setTasks={setDailyTasks} setCompletedTasks={setCompletedTasks} setPoints={setPoints} />
                 </Grid>
                 <Grid item xs={12} md={4}>
-                    <ToDoList tasks={weeklyTasks} title="Tâches Hebdomadaires" setTasks={setWeeklyTasks} setCompletedTasks={setCompletedTasks} />
+                    <ToDoList tasks={weeklyTasks} title="Tâches Hebdomadaires" setTasks={setWeeklyTasks} setCompletedTasks={setCompletedTasks} setPoints={setPoints} />
                 </Grid>
                 <Grid item xs={12} md={4}>
-                    <ToDoList tasks={monthlyTasks} title="Tâches Mensuelles" setTasks={setMonthlyTasks} setCompletedTasks={setCompletedTasks} />
+                    <ToDoList tasks={monthlyTasks} title="Tâches Mensuelles" setTasks={setMonthlyTasks} setCompletedTasks={setCompletedTasks} setPoints={setPoints} />
                 </Grid>
             </Grid>
             <Grid container spacing={2} sx={{ mt: 4 }}>
                 <Grid item xs={12}>
-                    <ToDoList tasks={completedTasks} title="Tâches Réalisées" isCompletedList />
+                    <ToDoList tasks={completedTasks} title="Tâches Réalisées" isCompletedList setPoints={setPoints} />
                 </Grid>
             </Grid>
         </>
