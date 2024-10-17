@@ -14,7 +14,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Link, useNavigate, Outlet } from 'react-router-dom';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, ListItemButton, LinearProgress } from '@mui/material';
-import { DashboardRounded, LeaderboardRounded, AccountCircleRounded, Logout } from '@mui/icons-material';
+import { DashboardRounded, LeaderboardRounded, AccountCircleRounded, Logout, AddTaskRounded } from '@mui/icons-material';
 import { signOut } from 'aws-amplify/auth';
 
 export default function PrimarySearchAppBar({ points, maxPoints }) {
@@ -130,7 +130,7 @@ export default function PrimarySearchAppBar({ points, maxPoints }) {
                     </Typography>
 
                     <Box sx={{ width: '40vw' }}>
-                        <LinearProgress variant="determinate" value={progress} sx={{ ml: 2 }} />
+                        <LinearProgress variant="determinate" value={progress} sx={{ ml: 2, '& .MuiLinearProgress-bar': { backgroundColor: 'background.main' } }} />
                     </Box>
 
                     <Typography variant="body2" sx={{ ml: 1, color: 'background' }}>
@@ -191,6 +191,7 @@ export default function PrimarySearchAppBar({ points, maxPoints }) {
                             { title: 'Dashboard', path: '/dashboard', icon: <DashboardRounded /> },
                             { title: 'Leaderboard', path: '/leaderboard', icon: <LeaderboardRounded /> },
                             { title: 'Profile', path: '/me', icon: <AccountCircleRounded /> },
+                            {'title': 'Admin', 'path': '/admin', 'icon': <AddTaskRounded />},
                         ].map((item) => (
                             <ListItem key={item.title}>
                                 <ListItemButton onClick={() => navigate(item.path)}>

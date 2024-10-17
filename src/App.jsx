@@ -54,7 +54,7 @@ function App() {
                 },
                 {
                     path: "/me",
-                    element: <UserProfile />,
+                    element: <UserProfile setPoints={setPoints} points={points} />,
                 },
                 {
                     path: "/leaderboard",

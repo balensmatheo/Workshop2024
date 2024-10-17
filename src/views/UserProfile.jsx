@@ -11,7 +11,7 @@ import {generateClient} from "aws-amplify/data";
 
 const client = generateClient();
 
-const UserProfile = () => {
+const UserProfile = ({points, setPoints}) => {
     
     const [user, setUser] = React.useState({});
     const [isLoading, setIsLoading] = React.useState(true);
@@ -37,7 +37,6 @@ const UserProfile = () => {
         { name: 'Platine', points: 1000, 'border': '4px solid #E5E4E2' },
         { name: 'Diamant', points: 1500, 'border': '4px solid #b9f2ff' },
     ];
-    const [points, setPoints] = React.useState(0);
 
     React.useEffect(() => {
         client.models.User.list().then((users) => {
@@ -61,7 +60,7 @@ const UserProfile = () => {
 
     return (
         <Container>
-        <ProfileCard user={user} ranks={ranks} />
+        <ProfileCard user={user} ranks={ranks} setPoints={setPoints} />
         <Ladder points={points} maxPoints={1000}  />
         <RewardTimeline currentPoints={points} rewards={rewards} />
 
