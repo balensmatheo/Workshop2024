@@ -49,10 +49,9 @@ export default function AdminView() {
                 isMonthly,
                 points,
             });
-            alert("Todo created successfully!");
+            alert("Tâche crée !");
         } catch (error) {
             console.error("Failed to create todo:", error);
-            alert("An error occurred while creating the todo.");
         }
     };
 
@@ -60,9 +59,9 @@ export default function AdminView() {
         <Container maxWidth="sm" sx={{ mt: 4 }}>
             <form onSubmit={createTodo}>
                 <TextField
-                    label="Title"
+                    label="Titre"
                     inputRef={titleRef}
-                    name="title"
+                    name="titre"
                     fullWidth
                     margin="normal"
                     required
@@ -79,19 +78,19 @@ export default function AdminView() {
                 <FormGroup>
                     <FormControlLabel
                         control={<Checkbox inputRef={isDoneRef} name="isDone" />}
-                        label="Is Done"
+                        label="Complété"
                     />
                     <FormControlLabel
                         control={<Checkbox inputRef={isDailyRef} name="isDaily" />}
-                        label="Is Daily"
+                        label="Journalier"
                     />
                     <FormControlLabel
                         control={<Checkbox inputRef={isWeeklyRef} name="isWeekly" />}
-                        label="Is Weekly"
+                        label="Hebdomadaire"
                     />
                     <FormControlLabel
                         control={<Checkbox inputRef={isMonthlyRef} name="isMonthly" />}
-                        label="Is Monthly"
+                        label="Mensuel"
                     />
                 </FormGroup>
 
@@ -111,17 +110,17 @@ export default function AdminView() {
                     color="primary"
                     sx={{ mt: 2 }}
                 >
-                    Submit
+                    Créer
                 </Button>
             </form>
-            <Button
+            {/* <Button
                 onClick={() => resetUserPoints()}
                 variant="contained"
                 color="primary"
                 sx={{ mt: 2 }}
             >
                 reset points
-            </Button>
+            </Button> */}
         </Container>
     );
 }
