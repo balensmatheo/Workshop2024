@@ -95,6 +95,13 @@
               "isRequired": false,
               "attributes": []
             },
+            "socialNetwork": {
+              "name": "socialNetwork",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
             "createdAt": {
               "name": "createdAt",
               "isArray": false,

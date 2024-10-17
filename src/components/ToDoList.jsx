@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { List, ListItem, ListItemIcon, ListItemText, Checkbox, Card, CardContent, Typography, Box, Badge } from '@mui/material';
 import { generateClient } from 'aws-amplify/data';
+import { FacebookRounded, Instagram, LinkedIn, Twitter, YouTube } from '@mui/icons-material';
 
 const client = generateClient();
 
@@ -42,24 +43,42 @@ const ToDoList = ({ tasks = [], title, setTasks, setCompletedTasks, isCompletedL
     const updateUserPoints = async (points) => {
         try {
             // Récupérer l'utilisateur actuel
-            const user = await client.models.User.list(); // Remplacez 'currentUserId' par la logique appropriée pour obtenir l'ID utilisateur
+            const user = await client.models.User.list();
             if (user.data.length === 0) {
                 await client.models.User.create({
                     points: points
-                })
-                console.log("User created successfully!")
+                });
+                console.log("User created successfully!");
             } else {
                 // Mettre à jour les points de l'utilisateur
                 await client.models.User.update({
                     id: user.data[0].id,
                     points: user.data[0].points + points,
                 });
-                console.log("User points updated successfully!")
+                console.log("User points updated successfully!");
             }
             setPoints(prevPoints => prevPoints + points);
 
         } catch (error) {
             console.error("Failed to update user points:", error);
+        }
+    };
+
+    // Fonction pour obtenir l'icône du réseau social
+    const getSocialNetworkIcon = (network) => {
+        switch (network) {
+            case 'facebook':
+                return <FacebookRounded />;
+            case 'twitter':
+                return <Twitter />;
+            case 'instagram':
+                return <Instagram />;
+            case 'linkedin':
+                return <LinkedIn />;
+            case 'youtube':
+                return <YouTube />;
+            default:
+                return null;
         }
     };
 
@@ -123,17 +142,19 @@ const ToDoList = ({ tasks = [], title, setTasks, setCompletedTasks, isCompletedL
                                             </Typography>
                                         }
                                     />
-                                    <Badge color="primary">
-                                        <Typography
-                                            variant="subtitle2"
-                                            sx={{
-                                                fontWeight: 'bold',
-                                                color: 'primary.main',
-                                            }}
-                                        >
-                                            {task.points} points
-                                        </Typography>
+                                    <Badge color="primary" sx={{ ml: 2 }}>
+                                        {getSocialNetworkIcon(task.socialNetwork)}
                                     </Badge>
+                                    <Typography
+                                        variant="subtitle2"
+                                        sx={{
+                                            fontWeight: 'bold',
+                                            color: 'primary.main',
+                                            ml: 2,
+                                        }}
+                                    >
+                                        {task.points} points
+                                    </Typography>
                                 </Box>
                             </ListItem>
                         ))}
