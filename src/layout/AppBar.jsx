@@ -15,7 +15,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, ListItemButton, LinearProgress } from '@mui/material';
 import InboxIcon from '@mui/icons-material/Inbox';
-import { AccountCircleRounded, DashboardRounded, LeaderboardRounded, Logout } from '@mui/icons-material';
+import { AccountCircleRounded, AddTaskRounded, DashboardRounded, LeaderboardRounded, Logout } from '@mui/icons-material';
 import { generateClient } from 'aws-amplify/data';
 import {useEffect} from "react";
 
@@ -220,6 +220,7 @@ export default function PrimarySearchAppBar() {
                             {'title': 'Tableau de bord', 'path': '/dashboard', 'icon': <DashboardRounded />},
                             {'title': 'Tableau des scores', 'path': '/leaderboard', 'icon': <LeaderboardRounded />},
                             {'title': 'Profil', 'path': '/me', 'icon': <AccountCircleRounded />},
+                            {'title': 'Admin', 'path': '/admin', 'icon': <AddTaskRounded />},
                         ].map((item) => (
                             <ListItem key={item.title}>
                                 <ListItemButton onClick={() => navigate(item.path)}>
