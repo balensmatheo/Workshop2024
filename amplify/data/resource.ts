@@ -8,7 +8,8 @@ const schema = a.schema({
     isDaily: a.boolean(),
     isWeekly: a.boolean(),
     isMonthly: a.boolean(),
-    points: a.integer()
+    points: a.integer(),
+    socialNetwork: a.string()
   })
       .authorization(allow => [allow.authenticated()]),
 

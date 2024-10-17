@@ -1,6 +1,6 @@
 import { generateClient } from 'aws-amplify/data';
 import { Container, TextField, Checkbox, FormControlLabel, Button, FormGroup, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { FacebookRounded, Instagram, LinkedIn, Twitter, YouTube } from '@mui/icons-material';
 
 const client = generateClient();
@@ -13,24 +13,24 @@ export default function AdminView() {
     const isWeeklyRef = useRef(null);
     const isMonthlyRef = useRef(null);
     const pointsRef = useRef(null);
-    const [socialNetwork, setSocialNetwork] = React.useState(null);
+    const [socialNetwork, setSocialNetwork] = useState(null);
 
     const resetUserPoints = async () => {
         try {
             const user = await client.models.User.list();
-            await client.models.User.update({
-                id: user.data[0].id,
-                points: 0,
-            });
-            window.location.reload();
-            alert("User points reset successfully!");
+            if (user.data.length > 0) {
+                await client.models.User.update({
+                    id: user.data[0].id,
+                    points: 0,
+                });
+                window.location.reload();
+                alert("User points reset successfully!");
+            }
         } catch (error) {
             console.error("Failed to reset user points:", error);
             alert("An error occurred while resetting user points.");
         }
     };
-
-
 
     const createTodo = async (event) => {
         event.preventDefault();
@@ -43,7 +43,6 @@ export default function AdminView() {
         const isMonthly = isMonthlyRef.current.checked;
         const points = parseInt(pointsRef.current.value, 10);
 
-
         try {
             await client.models.Todo.create({
                 title,
@@ -55,9 +54,10 @@ export default function AdminView() {
                 socialNetwork,
                 points,
             });
-            alert("Tâche crée !");
+            alert("Tâche créée avec succès!");
         } catch (error) {
             console.error("Failed to create todo:", error);
+            alert("An error occurred while creating the task.");
         }
     };
 
@@ -110,25 +110,21 @@ export default function AdminView() {
                     required
                 />
 
-                <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Réseau social</InputLabel>
+                <FormControl fullWidth margin="normal">
+                    <InputLabel id="social-network-label">Réseau social</InputLabel>
                     <Select
-                        fullWidth
-                        margin="normal"
-                        required
-                        defaultValue="facebook"
-                        value={socialNetwork}
+                        labelId="social-network-label"
+                        value={socialNetwork || ''}
                         onChange={(event) => setSocialNetwork(event.target.value)}
                     >
-                        <MenuItem value={null}>Aucun</MenuItem>
-                        <MenuItem value="facebook"><FacebookRounded sx={{mr: 1}}/> Facebook</MenuItem>
-                        <MenuItem value="twitter"><Twitter sx={{mr: 1}}/> Twitter</MenuItem>
-                        <MenuItem value="instagram"><Instagram sx={{mr: 1}}/> Instagram</MenuItem>
-                        <MenuItem value="linkedin"><LinkedIn sx={{mr: 1}}/> LinkedIn</MenuItem>
-                        <MenuItem value="youtube"><YouTube sx={{mr: 1}}/> YouTube</MenuItem>
+                        <MenuItem value="">Aucun</MenuItem>
+                        <MenuItem value="facebook"><FacebookRounded sx={{ mr: 1 }} /> Facebook</MenuItem>
+                        <MenuItem value="twitter"><Twitter sx={{ mr: 1 }} /> Twitter</MenuItem>
+                        <MenuItem value="instagram"><Instagram sx={{ mr: 1 }} /> Instagram</MenuItem>
+                        <MenuItem value="linkedin"><LinkedIn sx={{ mr: 1 }} /> LinkedIn</MenuItem>
+                        <MenuItem value="youtube"><YouTube sx={{ mr: 1 }} /> YouTube</MenuItem>
                     </Select>
                 </FormControl>
-
 
                 <Button
                     type="submit"
@@ -139,14 +135,14 @@ export default function AdminView() {
                     Créer
                 </Button>
             </form>
-            {/* <Button
-                onClick={() => resetUserPoints()}
+            <Button
+                onClick={resetUserPoints}
                 variant="contained"
-                color="primary"
+                color="secondary"
                 sx={{ mt: 2 }}
             >
-                reset points
-            </Button> */}
+                Réinitialiser les points
+            </Button>
         </Container>
     );
 }

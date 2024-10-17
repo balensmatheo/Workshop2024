@@ -12,48 +12,17 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, Outlet } from 'react-router-dom';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, ListItemButton, LinearProgress } from '@mui/material';
-import InboxIcon from '@mui/icons-material/Inbox';
-import { AccountCircleRounded, AddTaskRounded, DashboardRounded, LeaderboardRounded, Logout } from '@mui/icons-material';
-import { generateClient } from 'aws-amplify/data';
-import {useEffect} from "react";
+import { DashboardRounded, LeaderboardRounded, AccountCircleRounded, Logout } from '@mui/icons-material';
+import { signOut } from 'aws-amplify/auth';
 
-const client = generateClient();
-
-export default function PrimarySearchAppBar() {
+export default function PrimarySearchAppBar({ points, maxPoints }) {
     const navigate = useNavigate();
 
     const [drawerOpen, setDrawerOpen] = React.useState(false);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-    const [user, setUser] = React.useState({});
-    const [isLoading, setIsLoading] = React.useState(true);
-    const [points, setPoints] = React.useState(0);
-
-    useEffect(() => {
-        const fetchUserPoints = async () => {
-            try {
-                const user = await client.models.User.list();
-                setPoints(user.data[0].points);
-                setUser({
-                    name: user.nickname,
-                    avatarUrl: user.picture,
-                    points: points,
-                    rank: user.rank || 'Novice',
-                });
-                setIsLoading(false);
-            } catch (error) {
-                console.error("Failed to fetch user points:", error);
-                setIsLoading(false);
-            }
-        };
-
-        fetchUserPoints();
-    }, []);
-
-    const maxPoints = 1000;
-    const progress = (points / maxPoints) * 100;
 
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -128,6 +97,8 @@ export default function PrimarySearchAppBar() {
         </Menu>
     );
 
+    const progress = (points / maxPoints) * 100;
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
@@ -159,7 +130,7 @@ export default function PrimarySearchAppBar() {
                     </Typography>
 
                     <Box sx={{ width: '40vw' }}>
-                        <LinearProgress variant="determinate" value={progress}  sx={{ ml: 2, '& .MuiLinearProgress-bar': { backgroundColor: 'background.main' } }} />
+                        <LinearProgress variant="determinate" value={progress} sx={{ ml: 2 }} />
                     </Box>
 
                     <Typography variant="body2" sx={{ ml: 1, color: 'background' }}>
@@ -217,23 +188,22 @@ export default function PrimarySearchAppBar() {
                 <Box sx={{ overflow: 'auto' }}>
                     <List>
                         {[
-                            {'title': 'Tableau de bord', 'path': '/dashboard', 'icon': <DashboardRounded />},
-                            {'title': 'Tableau des scores', 'path': '/leaderboard', 'icon': <LeaderboardRounded />},
-                            {'title': 'Profil', 'path': '/me', 'icon': <AccountCircleRounded />},
-                            {'title': 'Admin', 'path': '/admin', 'icon': <AddTaskRounded />},
+                            { title: 'Dashboard', path: '/dashboard', icon: <DashboardRounded /> },
+                            { title: 'Leaderboard', path: '/leaderboard', icon: <LeaderboardRounded /> },
+                            { title: 'Profile', path: '/me', icon: <AccountCircleRounded /> },
                         ].map((item) => (
                             <ListItem key={item.title}>
                                 <ListItemButton onClick={() => navigate(item.path)}>
                                     <ListItemIcon sx={{ mr: 0 }}>
                                         {item.icon}
                                     </ListItemIcon>
-                                    <ListItemText primary={item.title} sx={{ ml: 0}} />
+                                    <ListItemText primary={item.title} sx={{ ml: 0 }} />
                                 </ListItemButton>
                             </ListItem>
                         ))}
                     </List>
+
                     <Divider />
-                    {/* Bouton de déconnexion rouge */}
                     <ListItem>
                         <ListItemButton onClick={handleLogout} sx={{ color: 'red' }}>
                             <ListItemIcon sx={{ color: 'red', mr: 0 }}>
