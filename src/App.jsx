@@ -15,16 +15,8 @@ import PrimarySearchAppBar from './layout/AppBar';
 import UserProfile from './views/UserProfile';
 import Leaderboard from './views/Leaderboard';
 import AdminView from './views/AdminView';
-import { fetchUserAttributes } from 'aws-amplify/auth';
-
 
 function App() {
-
-  fetchUserAttributes().then((attributes) => {  
-    console.log(attributes) 
-  })
-
-
   const router = createBrowserRouter([
     {
       path: "/signIn",
